@@ -1,0 +1,24 @@
+name: hax.co.id auto renew
+
+on:
+  workflow_dispatch:
+
+jobs:
+  renew:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests python-telegram-bot
+      - name: Run renew script
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          TELE_TOKEN: ${{ secrets.TELE_TOKEN }}
+          TELE_ID: ${{ secrets.TELE_ID }}
+        run: python main.py
